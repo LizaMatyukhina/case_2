@@ -1,12 +1,10 @@
 from random import randint
 
-'''Функция перевода часов в минуты.'''
 def time(hours):
     h, m = hours.split(':')
     minutes = int(h) * 60 + int(m)
     return minutes
 
-'''# Функция расчета времени для стоянки на бензоколонке.'''
 def time_for_benz(volume):
     volume = int(volume)
     volume = volume // 10
@@ -19,7 +17,6 @@ def time_for_benz(volume):
     return volume
 
 
-'''# Счет данных из главного файла + словарь с главными данными.'''
 d1 = {}
 with open('azs.txt', 'r') as f_in1:
     text1 = f_in1.readlines()
@@ -35,16 +32,8 @@ with open('azs.txt', 'r') as f_in1:
             k.append(h)
         a.update({'benz': k})
         d1[line[0]] = a
-
 print(d1)
 
-
-'''
-# Счет данных из input.txt + словарь со всеми данными.
-# Time_to_stop = время запрвки автомобиля.
-# time_to_go = время, когда автомобиль смодет поехать ЕСЛИ НЕТ ОЧЕРЕДИ!!
-# V = нужный объем бензинв.
-'''
 d2 = {}
 with open('input.txt', 'r') as f_in2:
     text2 = f_in2.readlines()
@@ -62,3 +51,17 @@ with open('input.txt', 'r') as f_in2:
         d2[minutes] = b
 print(d2)
 
+# Prices!
+d3 = {}
+d3['АИ-80'] = 38
+d3['АИ-92'] = 41
+d3['АИ-95'] = 44
+d3['АИ-98'] = 49
+print(d3)
+
+# Queue.
+d4 = {}
+d4[1] = 0
+d4[2] = 0
+d4[3] = 0
+print(d4)
