@@ -1,21 +1,28 @@
 from random import randint
+from ru_local import *
 
 
 def time(hours):
+    """Counting the number of minutes."""
     h, m = hours.split(':')
     minutes = int(h) * 60 + int(m)
     return minutes
 
 
-# Специально для Айгерим!
 def back_time(minutes):
+    """Determining the time."""
     h = minutes // 60
     m = minutes - h * 60
+    if h < 10:
+        h = '0' + str(h)
+    if m < 10:
+        m = '0' + str(m)
     phrase = str(h) + ':' + str(m)
     return phrase
 
 
 def time_for_benz(volume):
+    """Determining the time for gas station."""
     volume = int(volume)
     volume = volume // 10
     if volume % 10 > 5:
@@ -60,14 +67,11 @@ with open('input.txt', 'r') as f_in2:
         b['time_to_go'] = minutes + minutes_to_stop
         d2[minutes] = b
 
-
-# Prices!
 d3 = {}
-d3['АИ-80'] = 38
-d3['АИ-92'] = 41
-d3['АИ-95'] = 44
-d3['АИ-98'] = 49
-
+d3[AI_80] = 38
+d3[AI_92] = 41
+d3[AI_95] = 44
+d3[AI_98] = 49
 
 colichestvo_kolonok = value
 d4 = {}
@@ -76,13 +80,11 @@ for n in range(1, colichestvo_kolonok+1):
     d4[n] = 0
     d6[n] = []
 
-
 d5 = {}
-d5['АИ-80'] = 0
-d5['АИ-92'] = 0
-d5['АИ-95'] = 0
-d5['АИ-98'] = 0
-
+d5[AI_80] = 0
+d5[AI_92] = 0
+d5[AI_95] = 0
+d5[AI_98] = 0
 
 its_time_to_go = {}
 queue = 0
@@ -99,9 +101,8 @@ for i in range(1440):
                         hil = j
                         mini = d4[j]
                         d4[j] += 1
-                        print(' В', back_time(i), 'новый клиент: ', back_time(i), d2[i]['benz'], d2[i]['V'],
-                              d2[i]['time_to_stop'],
-                              'встал в очередь к автомату №', j)
+                        print(V, back_time(i), NEW_CLIENT, back_time(i), d2[i]['benz'], d2[i]['V'],
+                              d2[i]['time_to_stop'], QUEUE, j)
                         d6[j].append(i)
                         condition = 1
                         d5[d2[i]['benz']] += int(d2[i]['V'])
@@ -122,11 +123,11 @@ for i in range(1440):
                         break
 
         if condition == 0:
-            print(' В', back_time(i), 'новый клиент: ', back_time(i), d2[i]['benz'], d2[i]['V'], d2[i]['time_to_stop'],
-                  'не смог заправить автомобиль и покинул АЗС.')
+            print(V, back_time(i), NEW_CLIENT, back_time(i), d2[i]['benz'], d2[i]['V'], d2[i]['time_to_stop'],
+                  COULD_NOT_FILL_THE_CAR)
             queue += 1
         for k in range(1, value + 1):
-            print('Автомат №', k, 'максимальная очередь:', d1[str(k)]['max'], 'Марки бензина:', *(d1[str(k)]['benz']),
+            print(MACHINE_NUMBER, k, MAX_QUEUE, d1[str(k)]['max'], GASOLINE_BRANDS, *(d1[str(k)]['benz']),
                   '->', '*' * d4[k])
 
     if i in its_time_to_go.values():
@@ -147,22 +148,21 @@ for i in range(1440):
             arrive = pribitie_s_povtorom_otbitiya[s]
             l = d2[arrive]['station']
             d4[l] -= 1
-            print(' В', back_time(i), 'клиент: ', back_time(arrive), d2[arrive]['benz'], d2[arrive]['V'],
-                  d2[arrive]['time_to_stop'],
-                  'заправил свой автомобиль и покинул АЗС.')
+            print(V, back_time(i), CLIENT, back_time(arrive), d2[arrive]['benz'], d2[arrive]['V'],
+                  d2[arrive]['time_to_stop'], FILLED_THE_CAR)
             for k in range(1, value + 1):
-                print('Автомат №', k, 'максимальная очередь:', d1[str(k)]['max'], 'Марки бензина:',
+                print(MACHINE_NUMBER, k, MAX_QUEUE, d1[str(k)]['max'], GASOLINE_BRANDS,
                       *(d1[str(k)]['benz']),
                       '->', '*' * d4[k])
             its_time_to_go.pop(arrive)
 
 
-print('Количество литров, проданное за сутки по каждой марке бензина:', d5) # можно сделать красивый вывод, без словарей
-money=0
-our_patrol=['АИ-80', 'АИ-92', 'АИ-98', 'АИ-95']
+print(TOTAL_LITERS)
+for key in d5:
+    print(key, ':', d5[key], sep='')
+money = 0
+our_patrol = [AI_80, AI_92, AI_98, AI_95]
 for p in our_patrol:
-    money+=d5[p]*d3[p]
-print('Общая сумма продаж за сутки:', money)
-print('Количество клиентов, которые покинули АЗС не заправив автомобиль из-за «скопившейся» очереди:', queue)
-
-# добавить 0 перед временем, рулокал - АЙГЕРИМ
+    money += d5[p]*d3[p]
+print(TOTAL_SUM, money)
+print(LEFT_AZS, queue)
