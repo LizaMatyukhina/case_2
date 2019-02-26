@@ -51,6 +51,7 @@ with open('azs.txt', 'r') as f_in1:
         a.update({'benz': k})
         d1[line[0]] = a
 
+
 d2 = {}
 with open('input.txt', 'r') as f_in2:
     text2 = f_in2.readlines()
@@ -67,11 +68,13 @@ with open('input.txt', 'r') as f_in2:
         b['time_to_go'] = minutes + minutes_to_stop
         d2[minutes] = b
 
+
 d3 = {}
 d3[AI_80] = 38
 d3[AI_92] = 41
 d3[AI_95] = 44
 d3[AI_98] = 49
+
 
 colichestvo_kolonok = value
 d4 = {}
@@ -79,6 +82,7 @@ d6 = {}
 for n in range(1, colichestvo_kolonok+1):
     d4[n] = 0
     d6[n] = []
+
 
 d5 = {}
 d5[AI_80] = 0
